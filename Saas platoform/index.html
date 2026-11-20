@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23004c97' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6'/></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Caused - Bank Telemetry & Multi-Tenant SaaS Platform</title>
+
+    <!-- Authoritative Institutional Banking Typeface: Plus Jakarta Sans + JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Modern Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace']
+            },
+            colors: {
+              bank: {
+                blue: '#004c97',
+                navy: '#002855',
+                lightBlue: '#e8f1fb',
+                royal: '#1d4ed8',
+                accent: '#2563eb'
+              },
+              alert: {
+                red: '#dc2626',
+                deepRed: '#991b1b',
+                lightRed: '#fef2f2',
+                borderRed: '#fca5a5'
+              },
+              canvas: {
+                grey: '#f0f3f6',
+                borderGrey: '#d1d5db',
+                milkWhite: '#ffffff'
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* ----------------------------------------------------
+         TYPICAL BANK WEBSITE FONT & CORE TYPOGRAPHY
+         ---------------------------------------------------- */
+      html, body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, span, div, a {
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+        letter-spacing: -0.012em;
+      }
+      code, pre, .font-mono, [class*="font-mono"] {
+        font-family: 'JetBrains Mono', monospace !important;
+        font-feature-settings: "tnum" 1, "zero" 1;
+        letter-spacing: 0.01em;
+      }
+
+      /* Smooth transition between theme states */
+      body, header, div, nav, button, input, select, table {
+        transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+      }
+
+      /* ====================================================
+         TYPICAL BANK THEME (GREY CANVAS, MILK WHITE, BLUE & RED ALERTS)
+         Active when html.theme-light is present
+         ==================================================== */
+      html.theme-light,
+      html.theme-light body {
+        background-color: #f0f3f6 !important; /* Cool Executive Bank Grey */
+        color: #1e293b !important;             /* Slate Charcoal Text */
+      }
+
+      html.theme-light .min-h-screen.bg-slate-950 {
+        background-color: #f0f3f6 !important;
+        color: #1e293b !important;
+      }
+
+      /* Bank Header Bar */
+      html.theme-light header {
+        background-color: #ffffff !important;
+        border-bottom: 2px solid #004c97 !important; /* Top Bank Blue Accent Line */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04) !important;
+      }
+
+      /* Bank Cards: Pure Milk White with subtle grey borders */
+      html.theme-light [class*="bg-slate-900"] {
+        background-color: #ffffff !important; /* Milk White Card */
+        border: 1px solid #dbe2ea !important; /* Bank Structural Grey */
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+      }
+
+      /* Nested Containers & Inner Sub-Cards */
+      html.theme-light [class*="bg-slate-950"] {
+        background-color: #f8fafc !important; /* Crisp Off-White */
+        border-color: #e2e8f0 !important;
+      }
+
+      /* Top Banners with Institutional Bank Blue Styling */
+      html.theme-light .bg-gradient-to-r.from-blue-950\/50,
+      html.theme-light .bg-gradient-to-r.from-indigo-950\/50 {
+        background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%) !important;
+        border: 1px solid #bfdbfe !important;
+        border-left: 5px solid #004c97 !important; /* Prominent Bank Blue Left Accent */
+        box-shadow: 0 2px 5px rgba(0, 76, 151, 0.05) !important;
+      }
+
+      /* Inputs, Dropdowns & Controls */
+      html.theme-light input,
+      html.theme-light select,
+      html.theme-light textarea {
+        background-color: #ffffff !important;
+        border: 1.5px solid #cbd5e1 !important;
+        color: #0f172a !important;
+      }
+      html.theme-light input:focus,
+      html.theme-light select:focus,
+      html.theme-light textarea:focus {
+        border-color: #004c97 !important; /* Bank Blue Focus */
+        box-shadow: 0 0 0 3px rgba(0, 76, 151, 0.15) !important;
+      }
+
+      /* Typography */
+      html.theme-light h1,
+      html.theme-light h2,
+      html.theme-light h3,
+      html.theme-light h4 {
+        color: #002855 !important; /* Institutional Bank Navy */
+        font-weight: 700 !important;
+      }
+      html.theme-light .text-slate-100,
+      html.theme-light .text-slate-200 {
+        color: #1e293b !important;
+      }
+      html.theme-light .text-slate-300 {
+        color: #334155 !important;
+      }
+      html.theme-light .text-slate-400,
+      html.theme-light .text-slate-500 {
+        color: #64748b !important;
+      }
+
+      /* Retain White Text on Colored Buttons & Badges */
+      html.theme-light .text-white:not(
+        button, button *, 
+        .btn, .btn *, 
+        [class*="bg-blue"], [class*="bg-blue"] *,
+        [class*="bg-indigo"], [class*="bg-indigo"] *,
+        [class*="bg-red"], [class*="bg-red"] *,
+        [class*="bg-rose"], [class*="bg-rose"] *,
+        [class*="bg-emerald"], [class*="bg-emerald"] *
+      ) {
+        color: #0f172a !important;
+      }
+
+      /* Institutional Primary Bank Blue Buttons */
+      html.theme-light button.bg-blue-600,
+      html.theme-light button.bg-indigo-600 {
+        background-color: #004c97 !important;
+        color: #ffffff !important;
+        box-shadow: 0 2px 4px rgba(0, 76, 151, 0.25) !important;
+      }
+      html.theme-light button.bg-blue-600:hover,
+      html.theme-light button.bg-indigo-600:hover {
+        background-color: #003770 !important;
+      }
+
+      /* Inactive sub-tabs */
+      html.theme-light button.bg-slate-900\/60 {
+        background-color: #f1f5f9 !important;
+        border-color: #cbd5e1 !important;
+        color: #334155 !important;
+      }
+      html.theme-light button.bg-slate-900\/60:hover {
+        background-color: #e2e8f0 !important;
+        color: #0f172a !important;
+      }
+
+      /* Bank Tables */
+      html.theme-light thead.bg-slate-950,
+      html.theme-light thead {
+        background-color: #f1f5f9 !important;
+        border-bottom: 2px solid #cbd5e1 !important;
+      }
+      html.theme-light thead th {
+        color: #334155 !important;
+        font-weight: 700 !important;
+      }
+      html.theme-light tbody tr {
+        border-color: #e2e8f0 !important;
+      }
+      html.theme-light tbody tr:hover {
+        background-color: #f8fafc !important;
+      }
+
+      /* Progress Bar Background Tracks */
+      html.theme-light .bg-slate-950.h-1,
+      html.theme-light .bg-slate-950.h-1\.5 {
+        background-color: #e2e8f0 !important;
+      }
+
+      /* ====================================================
+         RED FOR ALERTS (INSTITUTIONAL BANK SECURITY RED)
+         ==================================================== */
+      
+      /* Security Alert & Warning Banners */
+      html.theme-light [class*="bg-rose-950"],
+      html.theme-light [class*="bg-red-950"] {
+        background-color: #fef2f2 !important; /* Soft Alert Red */
+        border: 1px solid #fca5a5 !important; /* Alert Border Red */
+        color: #991b1b !important;             /* Bold Alert Text */
+      }
+      html.theme-light [class*="bg-rose-950"] svg,
+      html.theme-light [class*="bg-red-950"] svg {
+        color: #dc2626 !important;
+      }
+
+      /* Red Alert Text */
+      html.theme-light .text-rose-200,
+      html.theme-light .text-rose-300,
+      html.theme-light .text-rose-400,
+      html.theme-light .text-red-400,
+      html.theme-light .text-red-300 {
+        color: #b91c1c !important;
+        font-weight: 600 !important;
+      }
+
+      /* Red Alert Badges (e.g. P1 Critical, Packet Drop Spike) */
+      html.theme-light [class*="bg-rose-500"],
+      html.theme-light [class*="bg-red-500"],
+      html.theme-light [class*="bg-red-600"] {
+        background-color: #dc2626 !important;
+        color: #ffffff !important;
+        box-shadow: 0 1px 3px rgba(220, 38, 38, 0.3) !important;
+      }
+
+      /* Red Alert Buttons (e.g. Simulate Failed Auth, Brute Force) */
+      html.theme-light button[class*="bg-rose-900"],
+      html.theme-light button[class*="hover:bg-rose-950"] {
+        background-color: #fef2f2 !important;
+        border: 1.5px solid #f87171 !important;
+        color: #991b1b !important;
+      }
+      html.theme-light button[class*="bg-rose-900"]:hover,
+      html.theme-light button[class*="hover:bg-rose-950"]:hover {
+        background-color: #fee2e2 !important;
+        border-color: #ef4444 !important;
+        color: #7f1d1d !important;
+      }
+
+      /* High contrast Bank Blue and Emerald Accents */
+      html.theme-light .text-blue-400 {
+        color: #004c97 !important;
+      }
+      html.theme-light .text-indigo-400 {
+        color: #1d4ed8 !important;
+      }
+      html.theme-light .text-emerald-400 {
+        color: #047857 !important;
+      }
+      html.theme-light .text-purple-400 {
+        color: #6d28d9 !important;
+      }
+      html.theme-light .text-amber-400 {
+        color: #b45309 !important;
+      }
+
+      /* ====================================================
+         DARK BANKING VAULT MODE (When html.dark is present)
+         Executive Charcoal, Deep Navy & Red Security Alerts
+         ==================================================== */
+      html.dark body {
+        background-color: #0a0f1d !important;
+      }
+      html.dark header {
+        border-bottom: 2px solid #1e40af !important;
+      }
+      html.dark [class*="bg-rose-500"],
+      html.dark [class*="bg-red-600"] {
+        background-color: #dc2626 !important;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-950 text-slate-100 min-h-screen antialiased selection:bg-blue-600 selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
