@@ -31,7 +31,6 @@ services:
   - type: web
     name: caused-saas
     runtime: static
-    plan: free
     rootDir: Saas platoform
     buildCommand: npm install && npm run build
     staticPublishPath: dist
