@@ -1,0 +1,8 @@
+__pycache__
+*.pyc
+*.pyo
+.env
+.git
+venv
+caused_vault.db
+test_*.py

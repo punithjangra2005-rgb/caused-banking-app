@@ -1,4 +1,26 @@
+# Environment files
 collector/.env
+.env
+
+# Python
 __pycache__/
 *.pyc
-.env
+*.pyo
+venv/
+.venv/
+*.egg-info/
+
+# Node
+node_modules/
+dist/
+
+# Database (regenerated on startup)
+*.db
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

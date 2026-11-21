@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, field_validator
 
 import database
-from config import PORT, HOST
+from config import PORT, HOST, FRONTEND_URL
 from policies.scrubber import apply_tcl_scrubbing
 from monitors.infra import get_system_metrics, COLLECTOR_VERSION
 from ai.anomaly import detector
@@ -26,9 +26,19 @@ app = FastAPI(
 )
 
 # Allow CORS for SaaS Frontend & Support Dashboard
+# In production, restrict to the deployed frontend URL; locally, allow dev origins.
+_cors_origins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+if FRONTEND_URL:
+    _cors_origins.append(FRONTEND_URL)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=_cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

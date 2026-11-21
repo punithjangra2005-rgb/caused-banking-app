@@ -13,6 +13,9 @@ HOST = os.getenv("HOST", "0.0.0.0")
 # Gemini API configuration (Free tier from Google AI Studio: https://aistudio.google.com)
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 
+# Frontend URL for CORS (set to deployed frontend URL in production)
+FRONTEND_URL = os.getenv("FRONTEND_URL", "")
+
 # Telemetry Anomaly Thresholds
 CPU_THRESHOLD = float(os.getenv("CPU_THRESHOLD", 85.0))
 LATENCY_THRESHOLD_MS = float(os.getenv("LATENCY_THRESHOLD_MS", 450.0))
